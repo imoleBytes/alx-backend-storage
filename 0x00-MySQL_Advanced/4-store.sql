@@ -7,7 +7,6 @@
     generate issue: network disconnection, crash, etc… to keep your data in a 
     good shape, let MySQL do it for you!
 */
-
 DELIMITER $$
 
 CREATE TRIGGER decrease_quantity_after_order
