@@ -12,4 +12,3 @@ topic (string) will be topic searched
 def schools_by_topic(mongo_collection, topic):
     """filter schools that has cerain topic in their topics"""
     return mongo_collection.find({"topics": {"$in": [topic]}})
-

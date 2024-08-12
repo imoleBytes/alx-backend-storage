@@ -43,9 +43,10 @@ def main():
         count = db.nginx.count_documents({
             "method": method
         })
-        print(f"    method {method}: {count}")
+        print(f"\tmethod {method}: {count}")
 
     status_count = db.nginx.count_documents({
+        "method": "GET",
         "path": "/status"
     })
     print(f"{status_count} status check")
