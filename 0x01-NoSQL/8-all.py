@@ -9,7 +9,7 @@ mongo_collection will be the pymongo collection object
 
 
 def list_all(mongo_collection):
-    """return all documentsin a collection"""
+    """return all documents in a collection"""
     documents = mongo_collection.find()
     if not documents:
         return []
