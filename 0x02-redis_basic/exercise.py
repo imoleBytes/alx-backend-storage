@@ -29,6 +29,33 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method: Callable) -> Callable:
+    """store the history of inputs and outputs
+
+    In this task, we will define a call_history decorator to store the history
+    of inputs and outputs for a particular function.
+
+    Everytime the original function will be called, we will add its input
+    parameters to one list in redis, and store its output into another list.
+
+    In call_history, use the decorated function’s qualified name and append
+    ":inputs" and ":outputs" to create input and output list keys,
+    respectively.
+    call_history has a single parameter named method that is a Callable and
+    eturns a Callable.
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """wrapper for the decorated function"""
+        input_value = str(args)
+        self._redis.rpush(method.__qualname__ + ":inputs", input_value)
+        output_value = str(method(self, *args, **kwargs))
+        self._redis.rpush(method.__qualname__ + ":outputs", output_value)
+        return output_value
+
+    return wrapper
+
+
 class Cache:
     """An cache of Redis engine"""
     def __init__(self) -> None:
