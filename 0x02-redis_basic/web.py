@@ -41,7 +41,7 @@ def access_count(method):
         # this increment count:url by 1, anf if it does not exists,
         # it initialize it by 1
         r.incr(key_count)
-        r.set(key, content)
+        r.set(key, content, ex=10)
         r.expire(key, 10)
         return content
     return wrapper
