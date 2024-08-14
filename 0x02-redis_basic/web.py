@@ -25,23 +25,23 @@ r = redis.Redis()
 
 
 def access_count(method):
-    """decorator for get_page function"""
+    """this decorates the get_page function"""
     @wraps(method)
     def wrapper(url):
-        """wrapper function"""
-        key = "cached:" + url
+        """wrapper"""
+        key = f"cached:{url}"
         cached_value = r.get(key)
         if cached_value:
             return cached_value.decode("utf-8")
 
         # Get new content and update cache
-        key_count = "count:" + url
+        key_count = f"count:{url}"
         content = method(url)
 
         # this increment count:url by 1, anf if it does not exists,
         # it initialize it by 1
         r.incr(key_count)
-        r.set(key, content, ex=10)
+        r.set(key, content)
         r.expire(key, 10)
         return content
     return wrapper
